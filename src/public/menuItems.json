@@ -1,0 +1,34 @@
+{
+  "Alcohol": [
+    { "name": "Frydenlund Pilsner", "price": 34 },
+    { "name": "Frydenlund Juicy Ipa", "price": 44 },
+    { "name": "Frydenlund Fatøl", "price": 38 },
+    { "name": "Aass Fatøl", "price": 38 },
+    { "name": "Isbjørn Lite", "price": 35 },
+    { "name": "Somersby", "price": 40 },
+    { "name": "Halmstad Crush", "price": 50 },
+    { "name": "Breezer", "price": 41 },
+    { "name": "Smirnoff Ice", "price": 48 }
+  ],
+
+  "Soda": [
+    { "name": "Soda", "price": 15 },
+    { "name": "Red Bull", "price": 23 },
+    { "name": "Monster", "price": 30 },
+    { "name": "Powerade", "price": 32 },
+    { "name": "Water", "price": 15 }
+  ],
+
+  "Food": [
+    { "name": "Pringles", "price": 13 },
+    { "name" : "Smash", "price": 35},
+    { "name" : "KitKat", "price": 20},
+    { "name" : "Oreo", "price": 8},
+    { "name" : "Musli Bar", "price": 8},
+    { "name" : "Jelly Beans", "price": 26},
+    { "name" : "Milka Chocolate", "price": 23},
+    { "name" : "Milka Jaffa", "price": 33},
+    { "name" : "Popcorn", "price": 10},
+    { "name": "Kvikk Lunsj", "price": 10 }
+  ]
+}

@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #141218;
+  --foreground: #261F31;
+  --primary: #392e49;
+  --headers: #D64097;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #141218;
+    --foreground: #261F31;
+    --primary: #392e49;
+    --headers: #D64097;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-family: var(--font-nunito);
+  font-weight: 600;
+}
+
+p {
+  font-family: var(--font-nunito);
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: white !important;
+}
+
+.tmp {
+  font-family: var(--font-rubik);
+  font-weight: 600;
+  color: white !important;
+}
+
+.forecasts {
+  font-family: var(--font-nunito);
+  font-weight: 400;
+  color: white !important;
+}
+
+.time {
+  font-family: var(--font-nunito);
+  font-weight: 800;
+  color: white !important;
+}
+
+.event-type {
+  font-family: var(--font-nunito);
+  font-weight: 800;
+  color: white !important;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
