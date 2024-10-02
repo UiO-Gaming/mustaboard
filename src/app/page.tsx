@@ -109,7 +109,7 @@ export default function Home() {
           );
           setCurrentWind({
             speed: Math.round(nearest.data.instant.details.wind_speed),
-            gust: nearest.data.instant.details.wind_speed_of_gust,
+            gust: Math.round(nearest.data.instant.details.wind_speed_of_gust),
           });
         }
       } catch (err) {
