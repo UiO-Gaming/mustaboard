@@ -1,10 +1,9 @@
-import exp from "constants";
 import React from "react";
 import { useEffect } from "react";
 
 function TimeCard() {
   const [time, setTime] = React.useState<Date>(new Date());
-  const [date, setDate] = React.useState<Date>(new Date());
+  const [date] = React.useState<Date>(new Date());
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,7 +24,6 @@ function TimeCard() {
   const formatDate = (date: Date) => {
     const day = date.getDate().toString().padStart(2, "0");
     const ending = findDateEnding(date);
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const monthText = date.toLocaleString("default", { month: "long" });
     const year = date.getFullYear();
 

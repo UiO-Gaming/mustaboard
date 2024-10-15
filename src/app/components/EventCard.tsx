@@ -29,10 +29,10 @@ interface EventCardProps {
 
 const recurringEvents: RecurringEvent[] = eventItems.recurring_events;
 const specialEvents: SpecialEvent[] = eventItems.special_events;
-const places: Place[] = eventItems.places.map((place: any) => ({
+const places: Place[] = eventItems.places.map((place: { name: string; closing_times: { day: string; time: string }[] }) => ({
   name: place.name,
   closingHours: new Map(
-    place.closing_times.map((time: any) => [time.day, time.time])
+    place.closing_times.map((time) => [time.day, time.time])
   ),
 }));
 

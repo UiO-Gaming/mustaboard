@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import vipps from "../../public/images/vipps.png";
 import Image from 'next/image';
 import SanityPeople from "../people";
-import SanityEvents from "../events";
 
 const InfoCard: React.FC = () => {
   interface Person {

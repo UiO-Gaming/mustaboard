@@ -1,6 +1,4 @@
 "use client";
-
-import next from "next";
 import MenuCard from "./components/MenuCard";
 import TemperatureCard from "./components/TemperatureCard";
 import TimeCard from "./components/TimeCard";
