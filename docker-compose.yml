@@ -1,0 +1,6 @@
+services:
+  mustaboard:
+    container_name: mustaboard
+    build: .
+    ports:
+      - 7000:7000
