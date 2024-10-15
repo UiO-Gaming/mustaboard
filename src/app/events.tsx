@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const SanityEvents = () => {
   const [events, setEvents] = useState([]);
@@ -30,7 +30,7 @@ const SanityEvents = () => {
     fetchData();
   }, [projectId, dataset]);
 
-  return event;
+  return events;
 }
 
 export default SanityEvents;
