@@ -73,14 +73,16 @@ export default function Home() {
           const currentTime = new Date();
           const timeseries = data.properties.timeseries;
 
-          const nearest = data.properties.timeseries.reduce((prev: { time: string }, curr: { time: string }) => {
-            const prevTime = new Date(prev.time);
-            const currTime = new Date(curr.time);
-            return Math.abs(currTime.getTime() - currentTime.getTime()) <
-              Math.abs(prevTime.getTime() - currentTime.getTime())
-              ? curr
-              : prev;
-          });
+          const nearest = data.properties.timeseries.reduce(
+            (prev: { time: string }, curr: { time: string }) => {
+              const prevTime = new Date(prev.time);
+              const currTime = new Date(curr.time);
+              return Math.abs(currTime.getTime() - currentTime.getTime()) <
+                Math.abs(prevTime.getTime() - currentTime.getTime())
+                ? curr
+                : prev;
+            }
+          );
 
           setnearestHour(nearest.time);
 
@@ -146,10 +148,12 @@ export default function Home() {
         wind={currentWind}
         fiveHourForecast={nextThreeHours}
       />
-      <EventCard></EventCard>
+      <EventCard
+        recurringTimeAhead="96"
+        specialTimeAhead="96"
+        placeTimeAhead="4"
+      ></EventCard>
       <TimeCard></TimeCard>
-
-      <div className="flex-1 bg-green-500"></div>
     </div>
   );
 }

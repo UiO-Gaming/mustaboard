@@ -14,6 +14,7 @@ const config: Config = {
         foreground: "var(--foreground)",
         primary: "var(--primary)",
         headers: "var(--headers)",
+        overlay: "var(--overlay)",
       },
     },
   },

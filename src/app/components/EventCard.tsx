@@ -21,14 +21,26 @@ interface Place {
   timeDiffMs?: number;
 }
 
+interface EventCardProps {
+  recurringTimeAhead: string;
+  specialTimeAhead: string;
+  placeTimeAhead: string;
+}
+
 const recurringEvents: RecurringEvent[] = eventItems.recurring_events;
 const specialEvents: SpecialEvent[] = eventItems.special_events;
 const places: Place[] = eventItems.places.map((place: any) => ({
   name: place.name,
-  closingHours: new Map(place.closing_times.map((time: any) => [time.day, time.time])),
+  closingHours: new Map(
+    place.closing_times.map((time: any) => [time.day, time.time])
+  ),
 }));
 
-const EventCard: React.FC = () => {
+const EventCard: React.FC<EventCardProps> = ({
+  recurringTimeAhead,
+  specialTimeAhead,
+  placeTimeAhead,
+}) => {
   const [upcomingEvents, setUpcomingEvents] = useState<
     (RecurringEvent | SpecialEvent | Place)[]
   >([]);
@@ -36,21 +48,24 @@ const EventCard: React.FC = () => {
   useEffect(() => {
     const updateEvents = () => {
       const now = new Date();
-      // Handle recurring events
+      // handle recurring events
       const eventsWithCountdown = recurringEvents.map((event) => {
-        const eventTime = getNextRecurringEvent(event.day, event.time || "00:00");
+        const eventTime = getNextRecurringEvent(
+          event.day,
+          event.time || "00:00"
+        );
         const timeDiffMs = eventTime.getTime() - now.getTime();
         return { ...event, timeDiffMs };
       });
 
-      // Handle places' closing times
+      // handle places' closing times
       const placesWithCountdown = places.map((place) => {
         const closingTime = getNextClosingTime(place.closingHours);
         const timeDiffMs = closingTime.getTime() - now.getTime();
         return { ...place, timeDiffMs };
       });
 
-      // Handle special events
+      // handle special events
       const specialEventsWithCountdown = specialEvents.map((event) => {
         const eventTime = new Date(`${event.date}T${event.time}`);
         const timeDiffMs = eventTime.getTime() - now.getTime();
@@ -59,17 +74,23 @@ const EventCard: React.FC = () => {
 
       const filteredEvents = [
         ...eventsWithCountdown.filter(
-          (event) => event.timeDiffMs! > 0 && event.timeDiffMs! <= 48 * 60 * 60 * 1000
-        ),
-        ...placesWithCountdown.filter(
-          (place) => place.timeDiffMs! > 0 && place.timeDiffMs! <= 4 * 60 * 60 * 1000
+          (event) =>
+            event.timeDiffMs! > 0 &&
+            event.timeDiffMs! <= parseInt(recurringTimeAhead) * 60 * 60 * 1000 // 4 days
         ),
         ...specialEventsWithCountdown.filter(
-          (event) => event.timeDiffMs! > 0 && event.timeDiffMs! <= 48 * 60 * 60 * 1000
+          (event) =>
+            event.timeDiffMs! > 0 &&
+            event.timeDiffMs! <= parseInt(specialTimeAhead) * 60 * 60 * 1000 // 4 days
+        ),
+        ...placesWithCountdown.filter(
+          (place) =>
+            place.timeDiffMs! > 0 &&
+            place.timeDiffMs! <= parseInt(placeTimeAhead) * 60 * 60 * 1000 // 4 hours
         ),
       ];
 
-      // Sort events by time difference
+      // sort events by time difference
       filteredEvents.sort((a, b) => a.timeDiffMs! - b.timeDiffMs!);
 
       setUpcomingEvents(filteredEvents);
@@ -85,13 +106,18 @@ const EventCard: React.FC = () => {
     <div className="flex flex-col bg-foreground rounded-lg p-3">
       <div className="flex flex-col gap-3">
         {upcomingEvents.map((event) => (
-          <div className="flex flex-1 flex-row bg-primary rounded-lg p-3 justify-between space" key={event.name}>
+          <div
+            className="flex flex-1 flex-row bg-primary rounded-lg p-3 justify-between space"
+            key={event.name}
+          >
             <div className="flex flex-row gap-3">
-              <p className="event-type">{'closingHours' in event ? "Closing" : "Event"}</p>
-              <p>{event.name}</p>
+              <p className="parabold">
+                {"closingHours" in event ? "Closing" : "Event"}
+              </p>
+              <p className="para">{event.name}</p>
             </div>
             <div className="flex flex-col gap-3">
-              <p>{getTimeDifference(event.timeDiffMs ?? 0)}</p>
+              <p className="para">{getTimeDifference(event.timeDiffMs ?? 0)}</p>
             </div>
           </div>
         ))}
@@ -103,11 +129,11 @@ const EventCard: React.FC = () => {
 const getNextRecurringEvent = (day: string, time: string): Date => {
   /**
    * Returns the next occurrence of a recurring event.
-   * 
+   *
    * @param {string} day - The day of the week the event occurs on.
    * @param {string} time - The time of day the event occurs at.
    * @returns {Date} The next occurrence of the event.
-   * 
+   *
    */
   const daysOfWeek: { [key: string]: number } = {
     Sunday: 0,
@@ -145,18 +171,18 @@ const getNextRecurringEvent = (day: string, time: string): Date => {
 const getNextClosingTime = (closingHours: Map<string, string>): Date => {
   /**
    * Returns the next closing time for a place.
-   * 
+   *
    * @param {Map<string, string>} closingHours - A map of closing times for each day of the week.
-   * 
+   *
    * @returns {Date} The next closing time for the place.
-   * 
+   *
    */
   const now = new Date();
   const currentDay = now.toLocaleDateString("en-US", { weekday: "long" });
 
   const closingTime = closingHours.get(currentDay);
   if (!closingTime) {
-    return now; // If no closing time for today, return now (or handle differently)
+    return now;
   }
 
   const [closingHour, closingMinute] = closingTime.split(":").map(Number);
@@ -164,12 +190,15 @@ const getNextClosingTime = (closingHours: Map<string, string>): Date => {
   closingDate.setHours(closingHour, closingMinute, 0, 0);
 
   if (now > closingDate) {
-    // If already past today's closing time, get the next day's closing time
     const nextDay = new Date(now.getTime() + 24 * 60 * 60 * 1000); // add 1 day
-    const nextDayName = nextDay.toLocaleDateString("en-US", { weekday: "long" });
+    const nextDayName = nextDay.toLocaleDateString("en-US", {
+      weekday: "long",
+    });
     const nextClosingTime = closingHours.get(nextDayName);
     if (nextClosingTime) {
-      const [nextClosingHour, nextClosingMinute] = nextClosingTime.split(":").map(Number);
+      const [nextClosingHour, nextClosingMinute] = nextClosingTime
+        .split(":")
+        .map(Number);
       closingDate.setDate(closingDate.getDate() + 1); // Move to the next day
       closingDate.setHours(nextClosingHour, nextClosingMinute, 0, 0);
     }
@@ -181,11 +210,11 @@ const getNextClosingTime = (closingHours: Map<string, string>): Date => {
 const getTimeDifference = (timeDiff: number): string => {
   /**
    * Returns a human-readable string representing the time difference.
-   * 
+   *
    * @param {number} timeDiff - The time difference in milliseconds.
-   * 
+   *
    * @returns {string} A human-readable string representing the time difference.
-   * 
+   *
    */
   const msInHour = 1000 * 60 * 60;
   const msInDay = msInHour * 24;

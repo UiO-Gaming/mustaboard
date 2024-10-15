@@ -28,7 +28,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ title, items }) => {
             <div className="flex flex-col gap-0.5">
               {items.map((item) => (
                 <div key={item.name} className="flex flex-row justify-end">
-                  <p className="text-headers text-right">kr {item.price}</p>
+                  <p className="text-p text-right">kr {item.price}</p>
                 </div>
               ))}
             </div>

@@ -7,6 +7,7 @@
   --foreground: #261F31;
   --primary: #392e49;
   --headers: #D64097;
+  --overlay: #4A3B61;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,6 +16,7 @@
     --foreground: #261F31;
     --primary: #392e49;
     --headers: #D64097;
+    --overlay: #4A3B61;
   }
 }
 
@@ -42,21 +44,24 @@ p {
   color: white !important;
 }
 
-.forecasts {
+.para {
   font-family: var(--font-nunito);
   font-weight: 400;
+  font-size: 1rem;
+  color: white !important;
+}
+
+.parabold {
+  font-family: var(--font-nunito);
+  font-weight: 800;
+  font-size: 1rem;
   color: white !important;
 }
 
 .time {
   font-family: var(--font-nunito);
   font-weight: 800;
-  color: white !important;
-}
-
-.event-type {
-  font-family: var(--font-nunito);
-  font-weight: 800;
+  font-size: 2rem;
   color: white !important;
 }
 

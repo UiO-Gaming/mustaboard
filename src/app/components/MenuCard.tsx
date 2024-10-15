@@ -1,6 +1,7 @@
 import React from "react";
 import menuItems from "../../public/menuItems.json";
 import MenuSection from "./MenuSection";
+import InfoCard from "./InfoCard";
 
 function MenuCard() {
   return (
@@ -16,9 +17,9 @@ function MenuCard() {
           <MenuSection title="Soda and Energy Drinks" items={menuItems.Soda}></MenuSection>
 
           {/*bottom box*/}
-          <div className="flex-1 bg-primary rounded-lg p-3">
-            <h1 className="text-headers">Info</h1>
-          </div>
+          <InfoCard> 
+            
+          </InfoCard>
         </div>
       </div>
 

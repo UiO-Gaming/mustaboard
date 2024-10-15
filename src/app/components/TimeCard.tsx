@@ -24,26 +24,48 @@ function TimeCard() {
 
   const formatDate = (date: Date) => {
     const day = date.getDate().toString().padStart(2, "0");
+    const ending = findDateEnding(date);
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const monthText = date.toLocaleString("default", { month: "long" });
     const year = date.getFullYear();
 
-    return `${day}.${month}.${year}`;
-  }
+    return `${day}${ending} ${monthText} ${year}`;
+  };
 
   const day = (date: Date) => {
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
     return days[date.getDay()];
-  }
+  };
+
+  const findDateEnding = (date: Date) => {
+    const day = date.getDate();
+
+    if (day === 1 || day === 21 || day === 31) {
+      return "st";
+    } else if (day === 2 || day === 22) {
+      return "nd";
+    } else if (day === 3 || day === 23) {
+      return "rd";
+    } else {
+      return "th";
+    }
+  };
 
   return (
     <div className="flex flex-col bg-foreground rounded-lg p-3">
       <div className="flex flex-row gap-3">
-        <div className="flex flex-1 flex-row bg-primary rounded-lg p-3 justify-evenly items-center">
-          <p>{formatDate(date)}</p>
-          <div className="text-headers text-p time">
-            {formatTime(time)}
-          </div>
-          <p>{day(date)}</p>
+        <div className="flex flex-1 flex-row bg-primary rounded-lg p-5 pl-3 pr-3 justify-between items-center">
+          <p className="text-p para">{formatDate(date)}</p>
+          <div className="absolute left-1/2 transform -translate-x-1/2 text-center text-headers text-p time">{formatTime(time)}</div>
+          <p className="text-p para">{day(date)}</p>
         </div>
       </div>
     </div>
