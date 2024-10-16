@@ -27,7 +27,7 @@ const TemperatureCard: React.FC<TemperatureCardProps> = ({
                 {precipitation + " mm"}
               </div>
               <div className="text-headers text-p para">
-                {wind.speed + "(" + wind.gust + ") m/s"}
+                {wind.get(0) + "(" + wind.get(1) + ") m/s"}
               </div>
             </div>
           </div>
@@ -35,14 +35,14 @@ const TemperatureCard: React.FC<TemperatureCardProps> = ({
 
         {/* right container */}
         <div className="flex flex-1 flex-col gap-3">
-          {fiveHourForecast.map((item, index) => (
+          {Array.from(fiveHourForecast.entries()).map(([time, temperature], index) => (
             <div
               key={index}
               className="flex flex-1 flex-col bg-primary rounded-lg gap-3 p-3 place-content-center"
             >
               <div className="flex justify-between content-center">
-                <div className="text-headers text-p para">{item.time}</div>
-                <div className="text-headers text-p para">{item.temperature}°</div>
+                <div className="text-headers text-p para">{time}</div>
+                <div className="text-headers text-p para">{temperature}°</div>
               </div>
             </div>
           ))}

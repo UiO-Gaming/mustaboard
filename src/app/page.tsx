@@ -137,14 +137,21 @@ export default function Home() {
       <TemperatureCard
         temperature={Math.round(
           Number(
-            weatherData.properties.timeseries.find(
+            weatherData?.properties.timeseries.find(
               (t) => t.time === nearestHour
-            )?.data.instant.details.air_temperature
+            )?.data.instant.details.air_temperature ?? 0
           )
         )}
         precipitation={currentPrecipitation ?? 0}
-        wind={currentWind}
-        fiveHourForecast={nextThreeHours}
+        wind={
+          currentWind
+            ? new Map([
+                [0, currentWind.speed],
+                [1, currentWind.gust],
+              ])
+            : new Map()
+        }
+        fiveHourForecast={new Map(nextThreeHours.map(f => [f.time, f.temperature]))}
       />
       <EventCard
         recurringTimeAhead="96"
