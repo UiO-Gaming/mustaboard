@@ -9,13 +9,6 @@ const InfoCard: React.FC = () => {
     telephone: string;
   }
 
-  interface Event {
-    name: string;
-    date: string;
-    time: string;
-    timeDiffMs?: number;
-  }
-
   const data: Person[] = SanityPeople();
   const person = data.find((person: Person) => person.telephone) || { name: "", telephone: "" };
 

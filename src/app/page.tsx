@@ -94,7 +94,7 @@ export default function Home() {
             .map(
               (ts: {
                 time: number;
-                data: { instant: { details: { air_temperature: any } } };
+                data: { instant: { details: { air_temperature: number } } };
               }) => {
                 const date = new Date(ts.time);
                 const hour = date.getHours().toString().padStart(2, "0");

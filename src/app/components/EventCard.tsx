@@ -100,7 +100,7 @@ const EventCard: React.FC<EventCardProps> = ({
     const intervalId = setInterval(updateEvents, 60 * 1000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [placeTimeAhead, recurringTimeAhead, specialTimeAhead]);
 
   return (
     <div className="flex flex-col bg-foreground rounded-lg p-3">
