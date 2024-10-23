@@ -12,4 +12,4 @@ RUN npm run build
 
 EXPOSE 7000
 
-CMD ["npm", "run", "start", "--port", "7000"]
+CMD ["npm", "run", "start"]
