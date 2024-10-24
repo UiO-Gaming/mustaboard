@@ -58,6 +58,13 @@ p {
   color: white !important;
 }
 
+.parasmall {
+  font-family: var(--font-nunito);
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: white !important;
+}
+
 .time {
   font-family: var(--font-nunito);
   font-weight: 800;
