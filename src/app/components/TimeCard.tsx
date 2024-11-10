@@ -22,7 +22,7 @@ function TimeCard() {
   };
 
   const formatDate = (date: Date) => {
-    const day = date.getDate().toString().padStart(2, "0");
+    const day = date.getDate().toString();
     const ending = findDateEnding(date);
     const monthText = date.toLocaleString("default", { month: "long" });
     const year = date.getFullYear();
