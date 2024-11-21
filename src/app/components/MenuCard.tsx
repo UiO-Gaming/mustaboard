@@ -17,9 +17,6 @@ function MenuCard() {
           <MenuSection title="Soda and Energy Drinks" items={menuItems.Soda}></MenuSection>
 
           {/*bottom box*/}
-          <InfoCard> 
-            
-          </InfoCard>
         </div>
       </div>
     </div>
