@@ -34,7 +34,7 @@ h1 {
 p {
   font-family: var(--font-nunito);
   font-weight: 400;
-  font-size: 0.75rem;
+  font-size: 1.25rem;
   color: white !important;
 }
 
@@ -47,14 +47,14 @@ p {
 .para {
   font-family: var(--font-nunito);
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: white !important;
 }
 
 .parabold {
   font-family: var(--font-nunito);
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: white !important;
 }
 

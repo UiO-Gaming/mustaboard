@@ -22,9 +22,6 @@ function MenuCard() {
           </InfoCard>
         </div>
       </div>
-
-      {/*bottom container and box*/}
-      <MenuSection title="Snacks and Sweets" items={menuItems.Food}></MenuSection>
     </div>
   );
 }
