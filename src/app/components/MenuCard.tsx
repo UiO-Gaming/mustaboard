@@ -1,7 +1,6 @@
 import React from "react";
 import menuItems from "../../public/menuItems.json";
 import MenuSection from "./MenuSection";
-import InfoCard from "./InfoCard";
 
 function MenuCard() {
   return (
