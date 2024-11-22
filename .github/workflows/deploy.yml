@@ -17,6 +17,9 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519  # This should be redundant but seems to do the trick.
           ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
 
+      - name: Correct file permissions
+        run: chmod -R u+w .
+
       - name: Connect, pull, build and deploy
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull && docker compose down && docker compose up -d --build && exit"
 
