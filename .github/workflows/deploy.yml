@@ -18,7 +18,7 @@ jobs:
           ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
 
       - name: Connect, pull, build and deploy
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && sudo chown -R $USER:$USER . && git checkout ${{ secrets.MAIN_BRANCH }} && git pull && docker compose down && docker compose up -d --build && exit"
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull && docker compose down && docker compose up -d --build && exit"
 
       - name: Clean up
         run: rm -rf ~/.ssh
