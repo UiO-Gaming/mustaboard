@@ -219,15 +219,20 @@ const getTimeDifference = (timeDiff: number): string => {
   const msInHour = 1000 * 60 * 60;
   const msInDay = msInHour * 24;
 
+  const rtf = new Intl.RelativeTimeFormat("en-US", {
+    numeric: "always", // "auto" will show "tomorrow" if day = 1
+    style: "long",
+  });
+
   if (timeDiff < msInHour) {
     const minutesLeft = Math.floor(timeDiff / (1000 * 60));
-    return `in ${minutesLeft} minutes`;
+    return rtf.format(minutesLeft, "minute")
   } else if (timeDiff < msInDay) {
     const hoursLeft = Math.floor(timeDiff / msInHour);
-    return `in ${hoursLeft} hours`;
+    return rtf.format(hoursLeft, "hour")
   } else {
     const daysLeft = Math.floor(timeDiff / msInDay);
-    return `in ${daysLeft} days`;
+    return rtf.format(daysLeft, "day")
   }
 };
 

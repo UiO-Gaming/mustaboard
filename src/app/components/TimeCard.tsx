@@ -22,39 +22,33 @@ function TimeCard() {
   };
 
   const formatDate = (date: Date) => {
-    const day = date.getDate().toString();
-    const ending = findDateEnding(date);
+    const day = convertToDayWithEnding(date);
     const monthText = date.toLocaleString("default", { month: "long" });
     const year = date.getFullYear();
 
-    return `${day}${ending} ${monthText} ${year}`;
+    // This is technically the british way of writing things but of well
+    // If we're going to argue about the order we might as well drop the st, nd, rd, th suffixes.
+    return `${day} of ${monthText} ${year}`;
   };
 
   const day = (date: Date) => {
-    const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    return days[date.getDay()];
+    return date.toLocaleDateString("en-US", { weekday: "long" });
   };
 
-  const findDateEnding = (date: Date) => {
+  const convertToDayWithEnding = (date: Date) => {
     const day = date.getDate();
 
-    if (day === 1 || day === 21 || day === 31) {
-      return "st";
-    } else if (day === 2 || day === 22) {
-      return "nd";
-    } else if (day === 3 || day === 23) {
-      return "rd";
-    } else {
-      return "th";
-    }
+    const enOrdinalRules = new Intl.PluralRules("en-US", { type: "ordinal" });
+    const suffixes = new Map([
+      ["one", "st"],
+      ["two", "nd"],
+      ["few", "rd"],
+      ["other", "th"],
+    ]);
+
+    const rule = enOrdinalRules.select(day);
+    const suffix = suffixes.get(rule);
+    return `${day}${suffix}`;
   };
 
   return (
