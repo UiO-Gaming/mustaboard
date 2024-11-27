@@ -31,16 +31,7 @@ function TimeCard() {
   };
 
   const day = (date: Date) => {
-    const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    return days[date.getDay()];
+    return date.toLocaleDateString("en-US", { weekday: "long" });
   };
 
   const findDateEnding = (date: Date) => {
