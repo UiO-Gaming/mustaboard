@@ -22,3 +22,7 @@ jobs:
 
       - name: Clean up
         run: rm -rf ~/.ssh
+
+    permissions:
+      contents: read
+      pull-requests: write
