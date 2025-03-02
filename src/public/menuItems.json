@@ -7,9 +7,8 @@
     { "name": "Isbjørn Lite", "price": 35 },
     { "name": "Somersby", "price": 41 },
     { "name": "Halmstad Crush", "price": 50 },
-    { "name": "Breezer", "price": 41 },
-    { "name": "Smirnoff Ice", "price": 48 },
-    { "name": "Juleøl", "price": 30 }
+    { "name": "Breezer", "price": 43 },
+    { "name": "Smirnoff Ice", "price": 48 }
   ],
 
   "Soda": [

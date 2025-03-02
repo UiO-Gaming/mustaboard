@@ -155,7 +155,7 @@ export default function Home() {
       />
       <EventCard
         recurringTimeAhead="96"
-        specialTimeAhead="96"
+        specialTimeAhead="730"
         placeTimeAhead="4"
       ></EventCard>
       <TimeCard></TimeCard>

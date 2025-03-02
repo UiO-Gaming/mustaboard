@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import eventItems from "../../public/eventItems.json";
+import next from "next";
 
 interface RecurringEvent {
   name: string;
@@ -29,18 +30,26 @@ interface EventCardProps {
 
 const recurringEvents: RecurringEvent[] = eventItems.recurring_events;
 const specialEvents: SpecialEvent[] = eventItems.special_events;
-const places: Place[] = eventItems.places.map((place: { name: string; closing_times: { day: string; time: string }[] }) => ({
-  name: place.name,
-  closingHours: new Map(
-    place.closing_times.map((time) => [time.day, time.time])
-  ),
-}));
+const places: Place[] = eventItems.places.map(
+  (place: {
+    name: string;
+    closing_times: { day: string; time: string }[];
+  }) => ({
+    name: place.name,
+    closingHours: new Map(
+      place.closing_times.map((time) => [time.day, time.time])
+    ),
+  })
+);
 
 const EventCard: React.FC<EventCardProps> = ({
   recurringTimeAhead,
   specialTimeAhead,
   placeTimeAhead,
 }) => {
+  const [nextSpecialEvent, setNextSpecialEvent] = useState<
+    RecurringEvent | SpecialEvent | Place | null
+  >(null);
   const [upcomingEvents, setUpcomingEvents] = useState<
     (RecurringEvent | SpecialEvent | Place)[]
   >([]);
@@ -67,7 +76,8 @@ const EventCard: React.FC<EventCardProps> = ({
 
       // handle special events
       const specialEventsWithCountdown = specialEvents.map((event) => {
-        const eventTime = new Date(`${event.date}T${event.time}`);
+        const [day, month, year] = event.date.split(".");
+        const eventTime = new Date(`${year}-${month}-${day}T${event.time}`);
         const timeDiffMs = eventTime.getTime() - now.getTime();
         return { ...event, timeDiffMs };
       });
@@ -78,11 +88,6 @@ const EventCard: React.FC<EventCardProps> = ({
             event.timeDiffMs! > 0 &&
             event.timeDiffMs! <= parseInt(recurringTimeAhead) * 60 * 60 * 1000 // 4 days
         ),
-        ...specialEventsWithCountdown.filter(
-          (event) =>
-            event.timeDiffMs! > 0 &&
-            event.timeDiffMs! <= parseInt(specialTimeAhead) * 60 * 60 * 1000 // 4 days
-        ),
         ...placesWithCountdown.filter(
           (place) =>
             place.timeDiffMs! > 0 &&
@@ -90,10 +95,19 @@ const EventCard: React.FC<EventCardProps> = ({
         ),
       ];
 
+      console.log(specialEventsWithCountdown);
+
+      const nextSpecialEvent = specialEventsWithCountdown.find(
+        (event) =>
+          event.timeDiffMs! > 0 &&
+          event.timeDiffMs! <= parseInt(specialTimeAhead) * 60 * 60 * 1000 // 30 days
+      );
+
       // sort events by time difference
       filteredEvents.sort((a, b) => a.timeDiffMs! - b.timeDiffMs!);
 
       setUpcomingEvents(filteredEvents);
+      setNextSpecialEvent(nextSpecialEvent || null);
     };
 
     updateEvents();
@@ -121,6 +135,20 @@ const EventCard: React.FC<EventCardProps> = ({
             </div>
           </div>
         ))}
+        <hr className="border-2 border-primary"></hr>
+        {nextSpecialEvent?.name != "" && (
+          <div className="flex flex-1 flex-row bg-gradient-to-r from-purple-500 to-overlay rounded-lg p-3 justify-between space border-2 border-primary animate-pulse">
+            <div className="flex flex-row gap-3">
+              <p className="parabold">Special Event</p>
+              <p className="">{nextSpecialEvent?.name}</p>
+            </div>
+            <div>
+              <p className="para">
+                {getTimeDifference(nextSpecialEvent?.timeDiffMs ?? 0)}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -226,13 +254,13 @@ const getTimeDifference = (timeDiff: number): string => {
 
   if (timeDiff < msInHour) {
     const minutesLeft = Math.floor(timeDiff / (1000 * 60));
-    return rtf.format(minutesLeft, "minute")
+    return rtf.format(minutesLeft, "minute");
   } else if (timeDiff < msInDay) {
     const hoursLeft = Math.floor(timeDiff / msInHour);
-    return rtf.format(hoursLeft, "hour")
+    return rtf.format(hoursLeft, "hour");
   } else {
     const daysLeft = Math.floor(timeDiff / msInDay);
-    return rtf.format(daysLeft, "day")
+    return rtf.format(daysLeft, "day");
   }
 };
 

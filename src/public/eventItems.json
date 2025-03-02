@@ -24,14 +24,9 @@
 
   "special_events": [
     {
-      "name": "SlottsLAN",
-      "date": "28.09.2024",
-      "time": "18:00"
-    },
-    {
       "name": "Gangfest",
-      "date": "02.11.2024",
-      "time": "23:00"
+      "date": "22.03.2025",
+      "time": "18:00"
     }
   ],
 
