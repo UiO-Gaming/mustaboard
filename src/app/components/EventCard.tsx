@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import eventItems from "../../public/eventItems.json";
-import next from "next";
 
 interface RecurringEvent {
   name: string;
