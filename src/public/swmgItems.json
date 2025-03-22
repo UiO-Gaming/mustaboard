@@ -1,0 +1,20 @@
+{
+    "Specials": [
+      {
+        "name": "Hard Cider",
+        "description": "Apple, 0.4 liter, 6% vol",
+        "price": 20
+      },
+      {
+        "name": "Cup Noodle",
+        "description": "Spicy Beef or Chicken",
+        "price": 23
+      },
+      {
+        "name": "Doritos",
+        "description": "Sweet Chili, Nacho Cheese, Flamin' Hot",
+        "price": 12
+      }
+    ]
+  }
+  

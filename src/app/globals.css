@@ -77,3 +77,55 @@ p {
     text-wrap: balance;
   }
 }
+
+/* === swmg theme === */
+.swmg {
+  --background: #050509;
+  --foreground: #120c1c;
+  --primary: #230b3a;
+  --headers: #ffffff;
+  --overlay: #1a102b;
+}
+
+.swmg p,
+.swmg .para,
+.swmg .parasmall,
+.swmg .text-p,
+.swmg .time {
+  color: #f5c542 !important;
+  text-shadow: 0 0 8px #ffffff88;
+}
+
+.swmg .text-headers {
+  color: #f5c542 !important;
+  text-shadow: 0 0 8px #ffffff88;
+}
+
+@keyframes swmgPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px #6f42c1aa, 0 0 20px #6f42c188;
+  }
+  50% {
+    box-shadow: 0 0 15px #a164ffcc, 0 0 30px #6f42c1cc;
+  }
+}
+
+.swmg .animate-pulse,
+.swmg .swmg-glow {
+  animation: swmgPulse 2.5s ease-in-out infinite;
+}
+
+.swmg .bg-primary {
+  animation: swmgPulse 5s ease-in-out infinite;
+}
+
+.swmg .specials-box {
+  background: linear-gradient(145deg, #2a1d38, #1a102b);
+  border: 2px solid #f5c542aa;
+  border-radius: 12px;
+  box-shadow:
+    0 0 8px #f5c54255,
+    0 0 20px #6f42c188,
+    inset 0 0 12px #2a1d38cc;
+  animation: swmgPulse 3s ease-in-out infinite;
+}

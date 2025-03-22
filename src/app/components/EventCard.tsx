@@ -12,7 +12,9 @@ interface SpecialEvent {
   name: string;
   date: string;
   time: string;
+  end_time?: string;
   timeDiffMs?: number;
+  ongoing?: boolean;
 }
 
 interface Place {
@@ -46,8 +48,7 @@ const EventCard: React.FC<EventCardProps> = ({
   specialTimeAhead,
   placeTimeAhead,
 }) => {
-  const [nextSpecialEvent, setNextSpecialEvent] = useState<
-    RecurringEvent | SpecialEvent | Place | null
+  const [nextSpecialEvent, setNextSpecialEvent] = useState<SpecialEvent | null
   >(null);
   const [upcomingEvents, setUpcomingEvents] = useState<
     (RecurringEvent | SpecialEvent | Place)[]
@@ -76,9 +77,24 @@ const EventCard: React.FC<EventCardProps> = ({
       // handle special events
       const specialEventsWithCountdown = specialEvents.map((event) => {
         const [day, month, year] = event.date.split(".");
-        const eventTime = new Date(`${year}-${month}-${day}T${event.time}`);
-        const timeDiffMs = eventTime.getTime() - now.getTime();
-        return { ...event, timeDiffMs };
+
+        const start = new Date(`${year}-${month}-${day}T${event.time}`);
+
+        let end = null;
+        if (event.end_time) {
+          const endHour = parseInt(event.end_time.split(":")[0]);
+          const endMinute = parseInt(event.end_time.split(":")[1]);
+          end = new Date(start);
+          if (endHour < start.getHours()) {
+            end.setDate(end.getDate() + 1);
+          }
+          end.setHours(endHour, endMinute);
+        }
+
+        const now = new Date();
+        const ongoing = end ? now >= start && now <= end : false;
+        const timeDiffMs = start.getTime() - now.getTime();
+        return { ...event, timeDiffMs, ongoing };
       });
 
       const filteredEvents = [
@@ -98,9 +114,16 @@ const EventCard: React.FC<EventCardProps> = ({
 
       const nextSpecialEvent = specialEventsWithCountdown.find(
         (event) =>
-          event.timeDiffMs! > 0 &&
-          event.timeDiffMs! <= parseInt(specialTimeAhead) * 60 * 60 * 1000 // 30 days
+          (event.timeDiffMs! > 0 &&
+            event.timeDiffMs! <= parseInt(specialTimeAhead) * 60 * 60 * 1000) ||
+          event.ongoing
       );
+
+      if (specialEventsWithCountdown.some(e => e.ongoing)) {
+        document.body.classList.add("swmg");
+      } else {
+        document.body.classList.remove("swmg");
+      }
 
       // sort events by time difference
       filteredEvents.sort((a, b) => a.timeDiffMs! - b.timeDiffMs!);
@@ -135,7 +158,7 @@ const EventCard: React.FC<EventCardProps> = ({
           </div>
         ))}
         <hr className="border-2 border-primary"></hr>
-        {nextSpecialEvent?.name != "" && (
+        {nextSpecialEvent && (nextSpecialEvent.ongoing || nextSpecialEvent.timeDiffMs! > 0) && (
           <div className="flex flex-1 flex-row bg-gradient-to-r from-purple-500 to-overlay rounded-lg p-3 justify-between space border-2 border-primary animate-pulse">
             <div className="flex flex-row gap-3">
               <p className="parabold">Special Event</p>
@@ -143,7 +166,9 @@ const EventCard: React.FC<EventCardProps> = ({
             </div>
             <div>
               <p className="para">
-                {getTimeDifference(nextSpecialEvent?.timeDiffMs ?? 0)}
+                {nextSpecialEvent?.ongoing
+                  ? "Now"
+                  : getTimeDifference(nextSpecialEvent?.timeDiffMs ?? 0)}
               </p>
             </div>
           </div>

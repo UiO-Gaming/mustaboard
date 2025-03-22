@@ -26,7 +26,8 @@
     {
       "name": "Gangfest",
       "date": "22.03.2025",
-      "time": "18:00"
+      "time": "18:00",
+      "end_time": "03:00"
     }
   ],
 
@@ -94,6 +95,39 @@
         {
           "day": "Sunday",
           "time": "22:00"
+        }
+      ]
+    },
+    {
+      "name": "Valkyrien Grill",
+      "closing_times" : [
+        {
+          "day": "Monday",
+          "time": "04:00"
+        },
+        {
+          "day": "Tuesday",
+          "time": "04:00"
+        },
+        {
+          "day": "Wednesday",
+          "time": "04:00"
+        },
+        {
+          "day": "Thursday",
+          "time": "04:00"
+        },
+        {
+          "day": "Friday",
+          "time": "04:00"
+        },
+        {
+          "day": "Saturday",
+          "time": "04:00"
+        },
+        {
+          "day": "Sunday",
+          "time": "04:00"
         }
       ]
     }
