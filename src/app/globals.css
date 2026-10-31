@@ -1,41 +1,67 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
-  --background: #141218;
-  --foreground: #261F31;
-  --primary: #392e49;
-  --headers: #D64097;
-  --overlay: #4A3B61;
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-headers: var(--headers);
+  --color-overlay: var(--overlay);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #141218;
-    --foreground: #261F31;
-    --primary: #392e49;
-    --headers: #D64097;
-    --overlay: #4A3B61;
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+@layer base {
+  :root {
+    --background: #141218;
+    --foreground: #261f31;
+    --primary: #392e49;
+    --headers: #d64097;
+    --overlay: #4a3b61;
+  }
 
-h1 {
-  font-family: var(--font-nunito);
-  font-weight: 600;
-}
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #141218;
+      --foreground: #261f31;
+      --primary: #392e49;
+      --headers: #d64097;
+      --overlay: #4a3b61;
+    }
+  }
 
-p {
-  font-family: var(--font-nunito);
-  font-weight: 400;
-  font-size: 1.25rem;
-  color: white !important;
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  h1 {
+    font-family: var(--font-nunito);
+    font-weight: 600;
+  }
+
+  p {
+    font-family: var(--font-nunito);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: white !important;
+  }
 }
 
 .tmp {
@@ -70,12 +96,6 @@ p {
   font-weight: 800;
   font-size: 2rem;
   color: white !important;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
 }
 
 /* === swmg theme === */

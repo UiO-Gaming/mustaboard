@@ -159,7 +159,7 @@ const EventCard: React.FC<EventCardProps> = ({
         ))}
         <hr className="border-2 border-primary"></hr>
         {nextSpecialEvent && (nextSpecialEvent.ongoing || nextSpecialEvent.timeDiffMs! > 0) && (
-          <div className="flex flex-1 flex-row bg-gradient-to-r from-purple-500 to-overlay rounded-lg p-3 justify-between space border-2 border-primary animate-pulse">
+          <div className="flex flex-1 flex-row bg-linear-to-r from-purple-500 to-overlay rounded-lg p-3 justify-between space border-2 border-primary animate-pulse">
             <div className="flex flex-row gap-3">
               <p className="parabold">Special Event</p>
               <p className="">{nextSpecialEvent?.name}</p>
